@@ -1,12 +1,15 @@
 import React from "react";
 
 interface IProps {
-    btnText: String;
+    btnText: string;
+    className?: string;
 }
-const AppButton = ({ btnText }: IProps) => {
+const AppButton = ({ btnText, className }: IProps) => {
     return (
         <div>
-            <button className="btn btn-active btn-primary">{btnText}</button>
+            <button type="submit" className={`btn  w-full  ${className}`}>
+                {btnText}
+            </button>
         </div>
     );
 };
