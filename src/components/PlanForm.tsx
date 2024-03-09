@@ -1,4 +1,5 @@
 import AppButton from "@/components/common/AppButton";
+import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type FormValues = {
@@ -9,7 +10,17 @@ type FormValues = {
 export default function PlanForm() {
     const { register, handleSubmit } = useForm<FormValues>();
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        console.log(data);
+
+        try {
+            const response = await axios.post("/api/formsubmit", data);
+
+            console.log({ response });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="flex items-center justify-center overflow-hidden sticky top-0">
@@ -22,11 +33,13 @@ export default function PlanForm() {
                     placeholder="What's your plan?"
                     className="input input-bordered w-full max-w-3xl text-sm my-2"
                     {...register("planTitle")}
+                    required
                 />
 
                 <textarea
                     placeholder="Can you describe it briefly?"
                     {...register("planDescription")}
+                    required
                     className="textarea textarea-bordered textarea-sm w-full max-w-3xl"
                 ></textarea>
 
