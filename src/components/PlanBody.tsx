@@ -9,6 +9,7 @@ interface IPlanProps {
 const PlanBody = ({ planUpdate }: IPlanProps) => {
     const [planDetails, setPlanDetails] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
+    const [idDelete, setIdDelete] = useState("");
 
     const fetchData = async () => {
         setIsFetching(true);
@@ -29,7 +30,7 @@ const PlanBody = ({ planUpdate }: IPlanProps) => {
     useEffect(() => {
         const fetchDataApi = fetchData();
         return () => {};
-    }, [planUpdate]);
+    }, [planUpdate, idDelete]);
 
     if (isFetching) {
         return (
@@ -46,7 +47,11 @@ const PlanBody = ({ planUpdate }: IPlanProps) => {
             <div className="flex items-center justify-between px-9 gap-9  flex-wrap my-5">
                 {planDetails.length > 0 ? (
                     planDetails.map((item) => (
-                        <PlanCard planItems={item} key={JSON.stringify(item)} />
+                        <PlanCard
+                            setIdDelete={setIdDelete}
+                            planItems={item}
+                            key={JSON.stringify(item)}
+                        />
                     ))
                 ) : (
                     <p> No Any Plan</p>
