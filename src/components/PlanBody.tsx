@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import PlanCard from "./PlanCard";
 import AppShimmer from "./common/AppShimmer";
 
-const PlanBody = () => {
+interface IPlanProps {
+    planUpdate: string;
+}
+const PlanBody = ({ planUpdate }: IPlanProps) => {
     const [planDetails, setPlanDetails] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
 
@@ -26,7 +29,7 @@ const PlanBody = () => {
     useEffect(() => {
         const fetchDataApi = fetchData();
         return () => {};
-    }, []);
+    }, [planUpdate]);
 
     if (isFetching) {
         return (

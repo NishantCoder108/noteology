@@ -7,7 +7,11 @@ type FormValues = {
     planDescription: string;
 };
 
-export default function PlanForm() {
+interface IPlanProps {
+    planAddedCheck: (data: string) => void;
+}
+
+export default function PlanForm({ planAddedCheck }: IPlanProps) {
     const { register, handleSubmit } = useForm<FormValues>();
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -17,6 +21,10 @@ export default function PlanForm() {
             const response = await axios.post("/api/formsubmit", data);
 
             console.log({ response });
+
+            if (response && response.status === 200) {
+                planAddedCheck(JSON.stringify(response.data));
+            }
         } catch (error) {
             console.log(error);
         }
